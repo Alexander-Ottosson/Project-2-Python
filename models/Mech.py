@@ -1,7 +1,7 @@
 class Mech:
 
-    def __init__(self, id=0, make="", model="", year="False", color="", max_speed=0, weight=0, height=0, description="",
-                 cp=0, p_count=0, available=False, confidential=False):
+    def __init__(self, id=0, make="", model="", year="False", color="", max_speed=0, weight=0, height=0, des="",
+                 cp=0, pc=0, ava=False, con=False):
         self.id = id
         self.make = make
         self.model = model
@@ -10,11 +10,11 @@ class Mech:
         self.max_speed = max_speed
         self.weight = weight
         self.height = height
-        self.description = description
+        self.des = des
         self.cp = cp
-        self.p_count = p_count
-        self.available = available
-        self.confidential = confidential
+        self.pc = pc
+        self.ava = ava
+        self.con = con
 
     def __repr__(self):
         return str({
@@ -26,11 +26,11 @@ class Mech:
             'max_speed': self.max_speed,
             'weight': self.weight,
             'height': self.height,
-            'description': self.description,
+            'description': self.des,
             'current_pilot': self.cp,
-            'pilot_count': self.p_count,
-            'available': self.available,
-            'confidential': self.confidential
+            'pilot_count': self.pc,
+            'available': self.ava,
+            'confidential': self.con
         })
 
     def json(self):
@@ -43,11 +43,11 @@ class Mech:
             'MaxSpeed': self.max_speed,
             'Weight': self.weight,
             'Height': self.height,
-            'Description': self.description,
+            'Description': self.des,
             'CurrentPilot': self.cp,
-            'PilotCount': self.p_count,
-            'Available': self.available,
-            'Confidential': self.confidential
+            'PilotCount': self.pc,
+            'Available': self.ava,
+            'Confidential': self.con
         }
 
 
