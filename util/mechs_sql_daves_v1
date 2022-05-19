@@ -1,0 +1,58 @@
+
+CREATE TABLE "user" (
+  id SERIAL PRIMARY KEY,
+  username varchar,
+  password varchar,
+  is_pilot boolean,
+  is_admin boolean
+);
+
+INSERT INTO "user" VALUES(1, 'mech_1', 'pass', TRUE, TRUE), (2, 'mech_2', 'pass', TRUE, FALSE), (3, 'mech_3', 'pass', FALSE, FALSE);
+SELECT * FROM "user";
+
+CREATE TABLE contact_info (
+  id SERIAL PRIMARY KEY,
+  contact varchar,
+  user_id INT references "user"(id) ON DELETE SET NULL
+);
+INSERT INTO contact_info VALUES(1, '1stmech@mail.com', 1), (2, 'the_2nd_mech@mail.com', 2), (1, '1stmech@mail.com', 3)
+
+CREATE TABLE mech (
+  id SERIAL PRIMARY KEY,
+  make varchar,
+  model varchar,
+  year varchar,
+  color varchar,
+  max_speed float,
+  weight float,
+  height float,
+  description varchar,
+  pilot_count int,
+  available boolean,
+  confidential boolean,
+  cp_id int REFERENCES "user"(id)
+);
+
+CREATE TABLE picture (
+  id SERIAL PRIMARY KEY,
+  file BYTEA,
+  mech_id INT REFERENCES mech(id)
+);
+
+CREATE TABLE rating (
+  id SERIAL PRIMARY KEY,
+  stars integer,
+  review varchar,
+  user_id INT REFERENCES "user"(id),
+  mech_id INT REFERENCES mech(id)
+);
+
+-- ALTER TABLE "contact_info" ADD FOREIGN KEY ("user_id") REFERENCES "user" ("id");
+
+-- ALTER TABLE "user" ADD FOREIGN KEY ("id") REFERENCES "mech" ("current_pilot");
+
+-- ALTER TABLE "picture" ADD FOREIGN KEY ("mech_id") REFERENCES "mech" ("id");
+
+-- ALTER TABLE "rating" ADD FOREIGN KEY ("user_id") REFERENCES "user" ("id");
+
+-- ALTER TABLE "rating" ADD FOREIGN KEY ("mech_id") REFERENCES "mech" ("id");
