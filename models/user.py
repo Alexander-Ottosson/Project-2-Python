@@ -25,3 +25,18 @@ class User:
             'IsPilot': self.is_pilot,
             'IsAdmin': self.is_admin
         }
+
+
+    def __eq__(self, other):
+        if not other:
+            return False
+
+        if not isinstance(other, User):
+            return False
+        # programmatic approach to line 33 of __dict__ comparison
+        # for value1, value2 in zip(vars(self).values(), vars(other).values()):
+        #     if value1 != value2:
+        #         return False
+        #
+        # return True
+        return self.__dict__ == other.__dict__
