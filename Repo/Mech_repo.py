@@ -1,5 +1,6 @@
 from Class.Mech import Mech
 from Curd.Mech_curd import MechCurd
+from exceptions.resource_not_found import ResourceNotFound
 from util.db_connection import connection
 
 
@@ -26,7 +27,10 @@ class Mechrepo(MechCurd):
         cursor = connection.cursor()
         cursor.execute(sql, [m_id])
         record = cursor.fetchone()
-        return build_mech(record)
+        if record:
+            return build_mech(record)
+        else:
+            raise ResourceNotFound("Could not find mech")
 
     def get_mechs(self):
         sql = 'SELECT * FROM mech'
