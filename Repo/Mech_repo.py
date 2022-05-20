@@ -1,6 +1,6 @@
 from Class.Mech import Mech
-from Project2_db import connection
 from Curd.Mech_curd import MechCurd
+from util.db_connection import connection
 
 
 def build_mech(record):

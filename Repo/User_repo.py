@@ -1,6 +1,6 @@
 from Class.User import User
-from Project2_db import connection
 from Curd.User_curd import UserCurd
+from util.db_connection import connection
 
 
 def build_user(record):
