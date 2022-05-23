@@ -8,6 +8,8 @@ CREATE TABLE "user" (
   "id" SERIAL PRIMARY KEY,
   "username" varchar,
   "password" varchar,
+  "firstname" varchar,
+  "lastname" varchar,
   "is_pilot" boolean,
   "is_admin" boolean
 );
@@ -64,3 +66,41 @@ ALTER TABLE "picture" ADD FOREIGN KEY ("mech_id") REFERENCES "mech" ("id");
 ALTER TABLE "rating" ADD FOREIGN KEY ("user_id") REFERENCES "user" ("id");
 
 ALTER TABLE "rating" ADD FOREIGN KEY ("mech_id") REFERENCES "mech" ("id");
+
+--SAMPLE DATA
+
+INSERT INTO "user" VALUES
+(DEFAULT,'tsnark', 'password', 'Tommy', 'Snark', TRUE, TRUE),
+(DEFAULT, 'scari', 'password', 'Sinji', 'Cari', TRUE, FALSE);
+
+INSERT INTO "mech" VALUES
+(
+	DEFAULT,
+	'Snark Industries',
+	'Copper Man MK. IV',
+	'2008',
+	'Green',
+	100,
+	300,
+	2,
+	'A suit of mechanized armor created for counter-terrorism. This suit is fully flight capable and includes a multitude of lethal and non-lethal combatitve options',
+	NULL,
+	1,
+	TRUE,
+	FALSE
+),
+(
+	DEFAULT,
+	'Hasis',
+	'Wattron',
+	'2016',
+	'Blue',
+	800,
+	1000,
+	15,
+	'A Mech designed for combatting threats high in the atmosphere. Fully capable of flight and weapons designed for air-to-air combat.',
+	NULL,
+	5,
+	FALSE,
+	FALSE
+);
