@@ -35,17 +35,17 @@ class Mech:
 
     def json(self):
         return {
-            'Id': self.m_id,
-            'Make': self.make,
-            "Model": self.model,
-            'Year': self.year,
-            'Color': self.color,
-            'MaxSpeed': self.max_speed,
-            'Weight': self.weight,
-            'Height': self.height,
-            'Description': self.des,
-            'CurrentPilot': self.cp,
-            'PilotCount': self.pc,
-            'Available': self.ava,
-            'Confidential': self.con
+            'id': self.m_id,
+            'make': self.make,
+            "model": self.model,
+            'year': self.year,
+            'color': self.color,
+            'maxSpeed': self.max_speed,
+            'weight': self.weight,
+            'height': self.height,
+            'description': self.des,
+            'currentPilot': self.cp,
+            'pilotCount': self.pc,
+            'available': self.ava,
+            'confidential': self.con
         }
