@@ -18,5 +18,5 @@ class MechServices:
     def delete_mech(self, m_id):
         return self.mech_repo.delete_mech(m_id)
 
-    def get_mechs(self):
-        return self.mech_repo.get_mechs()
+    def get_mechs(self,  **search_params):
+        return self.mech_repo.get_mechs(**search_params)

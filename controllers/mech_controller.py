@@ -16,13 +16,23 @@ ms = MechServices(mr)
 
 def route(app):
     @app.route("/mech", methods=['GET'])
-    def get_all_mechs():
-        return jsonify([mech.json() for mech in ms.get_all_Mechs()])
+    def get_mechs():
+        args = request.args
+
+        search_params = dict()
+
+        if 'onlyAvailable' in args:
+            search_params['available'] = True
+        # make sure a search term was included and not blank
+        if 'searchTerm' in args and args['searchTerm']:
+            search_params['search_term'] = f"%{args['searchTerm']}%"
+
+        return jsonify([mech.json() for mech in ms.get_mechs(**search_params)])
 
     @app.route("/mech/<m_id>", methods=['GET'])
     def get_mech(m_id):
         try:
-            return ms.get_mech_by_id(int(m_id)).json(), 200
+            return ms.get_mech(int(m_id)).json(), 200
         except ValueError as e:
             return "Not a valid ID", 400  # Bad Request
         except ResourceNotFound as r:
@@ -46,7 +56,7 @@ def route(app):
 
         return mech.json()
 
-    @app.route("mech/checkout/<m_id>", methods=["PATCH"])
+    @app.route("/mech/checkout/<m_id>", methods=["PATCH"])
     def checkout_mech(m_id):
         # TODO: get user info from a log in feature
         try:

@@ -32,10 +32,35 @@ class Mechrepo(MechCurd):
         else:
             raise ResourceNotFound("Could not find mech")
 
-    def get_mechs(self):
-        sql = 'SELECT * FROM mech'
+    def get_mechs(self, **sp):
+        # IMPORTANT: the key in the dictionary passed to this method needs to not be user-generated
+
+        sql = 'SELECT * FROM mech '
+
+        if len(sp) != 0:
+            # Begin WHERE clause
+            sql += 'WHERE '
+
+            # Search term finds the term in the mech's model, make, and description, clause needs to be combined with OR
+            if 'search_term' in sp and sp['search_term']:
+                sql += f"(model LIKE %(search_term)s OR " \
+                       f"make LIKE %(search_term)s OR " \
+                       f"description LIKE %(search_term)s) AND "
+            # Other search parameters need to be combined with AND,
+            # the key should be the name of the column searched
+            for k in sp.keys():
+                if k != 'search_term':
+                    # if value is string, LIKE is used so SQL wildcards can be used in the search
+                    if type(sp[k]) is str:
+                        sql += f"{k} LIKE %({k})s AND "
+                    else:
+                        sql += f"{k} = %({k})s AND "
+
+            # Removes the last AND from the Where clause to prevent a syntax error
+            sql = sql[:len(sql) - 4]
+
         cursor = connection.cursor()
-        cursor.execute(sql)
+        cursor.execute(sql, sp)
         records = cursor.fetchall()
 
         account_list = [build_mech(record) for record in records]
@@ -60,3 +85,17 @@ class Mechrepo(MechCurd):
         record = cursor.fetchone()
 
         return build_mech(record)
+
+
+def _test():
+    mr = Mechrepo()
+
+    search_term = "%eva%"
+    available = True
+
+    mechs = mr.get_mechs(search_term=search_term, available=available)
+    print(mechs)
+
+
+if __name__ == '__main__':
+    _test()

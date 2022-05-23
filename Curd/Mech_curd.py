@@ -11,6 +11,10 @@ class MechCurd(ABC):
         pass
 
     @abstractmethod
+    def get_mechs(self, **search_params):
+        pass
+
+    @abstractmethod
     def update_mech(self, change):
         pass
 
