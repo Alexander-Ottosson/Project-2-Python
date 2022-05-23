@@ -1,6 +1,6 @@
 from Class.Rating import Rating
-from Project2_db import connection
 from Curd.Rating_curd import RatingCurd
+from util.db_connection import connection
 
 
 def build_rating(record):
