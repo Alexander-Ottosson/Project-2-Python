@@ -20,3 +20,12 @@ class MechServices:
 
     def get_mechs(self,  **search_params):
         return self.mech_repo.get_mechs(**search_params)
+
+
+def __test():
+    mr = Mechrepo()
+    ms = MechServices(mr)
+    print(ms)
+
+if __name__ == '__main__':
+    __test()

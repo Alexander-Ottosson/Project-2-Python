@@ -59,7 +59,7 @@ SELECT * FROM "rating";
 
 ALTER TABLE "contact_info" ADD FOREIGN KEY ("user_id") REFERENCES "user" ("id");
 
--- ALTER TABLE "user" ADD FOREIGN KEY ("id") REFERENCES "mech" ("current_pilot");
+-- ALTER TABLE "mech"  ADD FOREIGN KEY ("current_pilot") REFERENCES  "user" ("id");
 
 ALTER TABLE "picture" ADD FOREIGN KEY ("mech_id") REFERENCES "mech" ("id");
 
