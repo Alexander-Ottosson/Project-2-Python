@@ -4,15 +4,15 @@ from util.db_connection import connection
 
 
 def build_user(record):
-    return User(u_id=record[0], username=record[1], password=record[2], is_pilot=record[3],
-                is_admin=record[4])
+    return User(u_id=record[0], username=record[1], password=record[2], first_name=record[3], last_name=record[4],
+                is_pilot=record[5], is_admin=record[6])
 
 
 class UserRepo(UserCurd):
     def create_user(self, user):
-        sql = 'INSERT INTO user VALUES(DEFAULT,%s,%s,%s, %s) RETURNING *'
+        sql = 'INSERT INTO user VALUES(DEFAULT,%s,%s,%s, %s, %s, %s) RETURNING *'
         cursor = connection.cursor()
-        cursor.execute(sql, [user.username, user.password, user.is_pilot, user.is_admin])
+        cursor.execute(sql, [user.username, user.password, user.first_name, user.last_name, user.is_pilot, user.is_admin])
 
         connection.commit()
         record = cursor.fetchone()
@@ -37,9 +37,9 @@ class UserRepo(UserCurd):
         return account_list
 
     def update_user(self, change):
-        sql = 'UPDATE user SET is_pilot=%s, is_admin=%s where id=%s RETURNING *'
+        sql = 'UPDATE user SET first_name=%s,  last_name=%s  is_pilot=%s, is_admin=%s where id=%s RETURNING *'
         cursor = connection.cursor()
-        cursor.execute(sql, [change.is_pilot, change.is_admin, change.u_id])
+        cursor.execute(sql, [change.first_name, change.last_name, change.is_pilot, change.is_admin, change.u_id])
         connection.commit()
         record = cursor.fetchone()
 
