@@ -10,7 +10,7 @@ def build_user(record):
 
 class UserRepo(UserCurd):
     def create_user(self, user):
-        sql = 'INSERT INTO user VALUES(DEFAULT,%s,%s,%s, %s, %s, %s) RETURNING *'
+        sql = 'INSERT INTO user VALUES(DEFAULT,%s,%s,%s,%s, %s, %s) RETURNING *'
         cursor = connection.cursor()
         cursor.execute(sql, [user.username, user.password, user.first_name, user.last_name, user.is_pilot, user.is_admin])
 
@@ -37,7 +37,7 @@ class UserRepo(UserCurd):
         return account_list
 
     def update_user(self, change):
-        sql = 'UPDATE user SET first_name=%s,  last_name=%s  is_pilot=%s, is_admin=%s where id=%s RETURNING *'
+        sql = 'UPDATE user SET firstname=%s, lastname=%s, is_pilot=%s, is_admin=%s where id=%s RETURNING *'
         cursor = connection.cursor()
         cursor.execute(sql, [change.first_name, change.last_name, change.is_pilot, change.is_admin, change.u_id])
         connection.commit()
