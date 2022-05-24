@@ -43,16 +43,16 @@ class Mechrepo(MechCurd):
 
             # Search term finds the term in the mech's model, make, and description, clause needs to be combined with OR
             if 'search_term' in sp and sp['search_term']:
-                sql += f"(model LIKE %(search_term)s OR " \
-                       f"make LIKE %(search_term)s OR " \
-                       f"description LIKE %(search_term)s) AND "
+                sql += f"( model ILIKE %(search_term)s OR " \
+                       f"make ILIKE %(search_term)s OR " \
+                       f"description ILIKE %(search_term)s ) AND "
             # Other search parameters need to be combined with AND,
             # the key should be the name of the column searched
             for k in sp.keys():
                 if k != 'search_term':
                     # if value is string, LIKE is used so SQL wildcards can be used in the search
                     if type(sp[k]) is str:
-                        sql += f"{k} LIKE %({k})s AND "
+                        sql += f"{k} ILIKE %({k})s AND "
                     else:
                         sql += f"{k} = %({k})s AND "
 
