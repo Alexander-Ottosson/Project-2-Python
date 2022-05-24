@@ -42,8 +42,10 @@ def route(app):
     def post_mech():
         body = request.json
 
-        mech = Mech(
-            make=body["make"], model=body["model"], year=body["year"], color=body["color"], max_speed=body["max_speed"], weight=body["weight"], height=body["height"], description=body["description"], current_pilot=body["current_pilot"],pilot_count=body["pilot_count"],available=body["available"], confidential=body["confidential"])
+        mech = Mech(make=body["make"], model=body["model"], year=body["year"], color=body["color"],
+                    max_speed=body["maxSpeed"], weight=body["weight"], height=body["height"],
+                    des=body["description"], cp=body["currentPilot"], pc=body["pilotCount"], ava=body["available"],
+                    con=body["confidential"])
         mech = ms.create_mech(mech)
 
         return mech.json()
@@ -51,7 +53,9 @@ def route(app):
     @app.route("/mech/<m_id>", methods=["PUT"])
     def put_mech(m_id):
         body = request.json
-        mech = Mech(m_id=m_id, make=body["make"], model=body["model"], year=body["year"], color=body["color"], max_speed=body["max_speed"], weight=body["weight"], height=body["height"], description=body["description"], current_pilot=body["current_pilot"],pilot_count=body["pilot_count"],available=body["available"], confidential=body["confidential"])
+        mech = Mech(m_id=m_id, make=body["make"], model=body["model"], year=body["year"], color=body["color"],
+                    max_speed=body["maxSpeed"], weight=body["weight"], height=body["height"], des=body["description"],
+                    cp=body["currentPilot"], pc=body["pilotCount"], ava=body["available"], con=body["confidential"])
         mech = ms.update_mech(mech)
 
         return mech.json()

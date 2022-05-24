@@ -14,7 +14,7 @@ class Mechrepo(MechCurd):
     def create_mech(self, mech):
         sql = 'INSERT INTO mech VALUES(DEFAULT,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) RETURNING *'
         cursor = connection.cursor()
-        cursor.execute(sql, [mech.m_id, mech.make, mech.model, mech.year, mech.color, mech.max_speed,
+        cursor.execute(sql, [mech.make, mech.model, mech.year, mech.color, mech.max_speed,
                              mech.weight, mech.height, mech.des, mech.cp, mech.pc, mech.ava, mech.con])
 
         connection.commit()
