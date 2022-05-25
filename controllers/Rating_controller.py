@@ -16,14 +16,14 @@ def route(app):
     def get_ratings():
         return jsonify([rating.json() for rating in rs.get_ratings()])
 
-    @app.route("/rating/<mech_id>", methods=['GET'])
+    @app.route("/rating/1/<mech_id>", methods=['GET'])
     def get_all_rating_mech(mech_id):
-        try:
-            return jsonify([rating.json() for rating in rs.get_all_rating_mech(mech_id)])
-        except ValueError:
-            return "Not a valid ID", 400
-        except ResourceNotFound as r:
-            return r.message, 404
+        # try:
+        return jsonify([rating.json() for rating in rs.get_all_rating_mech(mech_id)])
+        # except ValueError:
+        #     return "Not a valid ID", 400
+        # except ResourceNotFound as r:
+        #     return r.message, 404
 
     @app.route("/rating/<r_id>", methods=['GET'])
     def get_rating(r_id):
