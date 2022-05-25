@@ -52,9 +52,9 @@ class UserRepo(UserCurd):
         cursor.execute(sql, [u_id])
 
         connection.commit()
-        record = cursor.fetchone()
-
-        return build_user(record)
+        # record = cursor.fetchone()
+        #
+        # return build_user(record)
 
     def get_user_by_login_info(self, username, password):
         sql = 'SELECT * ' \

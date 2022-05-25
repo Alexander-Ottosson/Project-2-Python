@@ -28,23 +28,17 @@ class UnittestMech(unittest.TestCase):
         print(test_mech.m_id)
         self.assertNotEqual(get_form.m_id, test_mech.m_id, msg="Not equal")
 
-    # Currently doesn't work. The error is AssertionError: First sequence is not a list: <MagicMock id='2652697510384'>
-    # def test_delete_mech(self):
-    #     ms.get_mechs = MagicMock(return_value=[
-    #         Mech(m_id=8, make="test", model="test", year="test", color="test", max_speed=0, weight=0, height=0,
-    #              des="test", cp=1, pc=0, ava=False, con=False),
-    #         Mech(m_id=6, make="test", model="test", year="test", color="test", max_speed=0, weight=0, height=0,
-    #              des="test", cp=1, pc=0, ava=False, con=False),
-    #         Mech(m_id=7, make="test", model="test", year="test", color="test", max_speed=0, weight=0, height=0,
-    #              des="test", cp=1, pc=0, ava=False, con=False)
-    #     ])
-    #     ms.delete_mech(8)
-    #     refined_mech = ms.get_mechs
-    #     print(refined_mech)
-    #
-    #     self.assertListEqual(refined_mech, [
-    #         Mech(m_id=6, make="test", model="test", year="test", color="test", max_speed=0, weight=0, height=0,
-    #              des="test", cp=1, pc=0, ava=False, con=False),
-    #         Mech(m_id=7, make="test", model="test", year="test", color="test", max_speed=0, weight=0, height=0,
-    #              des="test", cp=1, pc=0, ava=False, con=False)
-    #     ])
+    def test_delete_mech(self):
+        ms.get_mechs = MagicMock(return_value=[
+            Mech(m_id=8, make="test", model="test", year="test", color="test", max_speed=0, weight=0, height=0,
+                 des="test", cp=1, pc=0, ava=False, con=False),
+            Mech(m_id=6, make="test", model="test", year="test", color="test", max_speed=0, weight=0, height=0,
+                 des="test", cp=1, pc=0, ava=False, con=False),
+            Mech(m_id=7, make="test", model="test", year="test", color="test", max_speed=0, weight=0, height=0,
+                 des="test", cp=1, pc=0, ava=False, con=False)
+        ])
+        ms.delete_mech(8)
+
+        self.assertNotIn(
+            Mech(m_id=8, make="test", model="test", year="test", color="test", max_speed=0, weight=0, height=0,
+                 des="test", cp=1, pc=0, ava=False, con=False), ms.get_mechs, msg="Good")

@@ -27,3 +27,18 @@ class UnittestUser(unittest.TestCase):
         print(get_form)
         print(test_user.u_id)
         self.assertNotEqual(get_form.u_id, test_user.u_id, msg="Not equal")
+
+    def test_delete_user(self):
+        us.get_users = MagicMock(return_value=[
+            User(u_id=4, username="test", password="pTest", first_name="fnTest", last_name="lnTest", is_pilot=True,
+                 is_admin=False),
+            User(u_id=10, username="test", password="pTest", first_name="fnTest", last_name="lnTest", is_pilot=True,
+                 is_admin=True),
+            User(u_id=15, username="test", password="pTest", first_name="fnTest", last_name="lnTest", is_pilot=True,
+                 is_admin=False)
+        ])
+        us.delete_user(15)
+
+        self.assertNotIn(
+            User(u_id=15, username="test", password="pTest", first_name="fnTest", last_name="lnTest", is_pilot=True,
+                 is_admin=False), us.get_users, msg="Good")
