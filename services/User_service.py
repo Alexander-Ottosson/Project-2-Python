@@ -20,3 +20,6 @@ class UserServices:
 
     def get_users(self):
         return self.user_repo.get_users()
+
+    def login(self, username, password):
+        return self.user_repo.get_user_by_login_info(username, password)
