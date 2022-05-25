@@ -44,7 +44,7 @@ def route(app):
         return rating.json()
 
     @app.route("/rating/<r_id>", methods=["PUT"])
-    def put_user(r_id):
+    def put_rating(r_id):
         body = request.json
         rating = Rating(r_id=r_id, stars=body["stars"], review=body["review"])
         rating = rs.update_rating(rating)
@@ -52,6 +52,6 @@ def route(app):
         return rating.json()
 
     @app.route("/rating/<r_id>", methods=['DELETE'])
-    def delete_user(r_id):
+    def delete_rating(r_id):
         rs.delete_rating(r_id)
         return '', 204  # No Content
