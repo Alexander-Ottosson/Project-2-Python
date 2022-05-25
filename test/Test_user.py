@@ -8,15 +8,16 @@ ur = UserRepo()
 us = UserServices(ur)
 ut = unittest
 test_user = User(4, "test", "pTest", "fnTest", "lnTest", True, False)
+test_use = User(0, "test", "pTest", "fnTest", "lnTest", True, False)
 
 
 class UnittestUser(unittest.TestCase):
 
-    def test_a_create_user(self):
-        test = us.create_user(test_user)
+    def test_create_user(self):
+        test = us.create_user(test_use)
         self.assertEqual(test.is_pilot, True, msg="Noice")
 
-    def test_b_get_user(self):
+    def test_get_user(self):
         get_form = us.get_user(4)
         print(get_form)
         print(test_user.u_id)

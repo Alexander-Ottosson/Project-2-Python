@@ -8,25 +8,26 @@ mr = Mechrepo()
 ms = MechServices(mr)
 ut = unittest
 test_mech = Mech(0, "test", "test", "test", "test", 0, 0, 0, "test", 1, 1, False, False)
+test_mec = Mech(6, "test", "test", "test", "test", 0, 0, 0, "test", 1, 1, False, False)
 
 
 class UnittestMech(unittest.TestCase):
 
-    def test_a_create_mech(self):
+    def test_create_mech(self):
         test = ms.create_mech(test_mech)
         self.assertEqual(test.make, "test", msg="Noice")
 
-    def test_b_get_mech(self):
+    def test_get_mech(self):
         get_form = ms.get_mech(6)
         print(get_form)
-        print(test_mech.m_id)
-        self.assertEqual(get_form.m_id, test_mech.m_id, msg="equal")
+        print(test_mec.m_id)
+        self.assertEqual(get_form.m_id, test_mec.m_id, msg="equal")
 
     def test_fail_get_mech(self):
         get_form = ms.get_mech(7)
         print(get_form)
-        print(test_mech.m_id)
-        self.assertNotEqual(get_form.m_id, test_mech.m_id, msg="Not equal")
+        print(test_mec.m_id)
+        self.assertNotEqual(get_form.m_id, test_mec.m_id, msg="Not equal")
 
     def test_delete_mech(self):
         ms.get_mechs = MagicMock(return_value=[
