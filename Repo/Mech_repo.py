@@ -82,9 +82,9 @@ class Mechrepo(MechCurd):
         cursor.execute(sql, [m_id])
 
         connection.commit()
-        record = cursor.fetchone()
-
-        return build_mech(record)
+        # record = cursor.fetchone()
+        #
+        # return build_mech(record)
 
 
 def _test():

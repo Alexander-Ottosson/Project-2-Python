@@ -1,6 +1,6 @@
 class Mech:
 
-    def __init__(self, m_id=0, make="", model="", year="False", color="", max_speed=0, weight=0, height=0, des="",
+    def __init__(self, m_id=0, make="", model="", year="", color="", max_speed=0, weight=0, height=0, des="",
                  cp=0, pc=0, ava=False, con=False):
         self.m_id = m_id
         self.make = make
