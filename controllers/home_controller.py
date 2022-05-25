@@ -9,7 +9,7 @@ from services.User_service import UserServices
 ur = UserRepo()
 us = UserServices(ur)
 
-user = User()
+user = us.get_user(1)
 
 
 def route(app):
@@ -27,3 +27,9 @@ def route(app):
         except ResourceNotFound as e:
             return 'Invalid Login', 401
 
+    @app.route('/current_user', methods=['GET'])
+    def current_user():
+        if user.u_id != 0:
+            return user.json(), 200
+        else:
+            return {'message': 'No User Logged In'}, 400
