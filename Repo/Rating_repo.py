@@ -36,6 +36,18 @@ class Ratingrepo(RatingCurd):
         record = cursor.fetchone()
         return build_rating(record)
 
+    def get_all_ratings_for_mech(self, mech_id):
+        sql = "select * from rating inner join mech on rating.mech_id = mech.id where " \
+              "rating.mech_id = %s "
+        cursor = connection.cursor()
+        cursor.execute(sql, [mech_id])
+
+        records = cursor.fetchall()
+
+        rating_list = [build_rating(record) for record in records]
+
+        return rating_list
+
     def update_rating(self, change):
         sql = 'UPDATE rating SET stars=%s, reviews=%s where id=%s RETURNING *'
         cursor = connection.cursor()
@@ -54,3 +66,14 @@ class Ratingrepo(RatingCurd):
         record = cursor.fetchone()
 
         return build_rating(record)
+
+
+def _test():
+    # super = Rating(0, 3, 1, 2, "Far too small to be a real mech.")
+    rr = Ratingrepo()
+    # print(rr.create_rating(super))
+    print(rr.get_all_ratings_for_mech(1))
+
+
+if __name__ == '__main__':
+    _test()

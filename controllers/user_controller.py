@@ -17,7 +17,7 @@ def route(app):
         return jsonify([user.json() for user in us.get_users()])
 
     @app.route("/user/<u_id>", methods=['GET'])
-    def get_mech(u_id):
+    def get_user(u_id):
         try:
             return us.get_user(int(u_id)).json(), 200
         except ValueError as e:

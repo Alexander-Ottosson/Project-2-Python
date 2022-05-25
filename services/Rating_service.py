@@ -20,4 +20,7 @@ class RatingService:
 
     def get_ratings(self):
         return self.rating_repo.get_ratings()
+
+    def get_all_rating_mech(self, mech_id):
+        return self.rating_repo.get_all_ratings_for_mech(mech_id)
     
