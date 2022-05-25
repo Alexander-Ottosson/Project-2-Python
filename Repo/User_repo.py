@@ -1,5 +1,6 @@
 from Class.User import User
 from Curd.User_curd import UserCurd
+from exceptions.resource_not_found import ResourceNotFound
 from util.db_connection import connection
 
 
@@ -54,3 +55,17 @@ class UserRepo(UserCurd):
         record = cursor.fetchone()
 
         return build_user(record)
+
+    def get_user_by_login_info(self, username, password):
+        sql = 'SELECT * ' \
+              'FROM "user" ' \
+              'WHERE username = %s AND password = %s'
+
+        cursor = connection.cursor()
+        cursor.execute(sql, [username, password])
+        record = cursor.fetchone()
+
+        if record:
+            return build_user(record)
+        else:
+            raise ResourceNotFound('Login Failed')
