@@ -7,7 +7,7 @@ from services.Mech_service import MechServices
 mr = Mechrepo()
 ms = MechServices(mr)
 ut = unittest
-test_mech = Mech(6, "test", "test", "test", "test", 0, 0, 0, "test", 1, 1, False, False)
+test_mech = Mech(0, "test", "test", "test", "test", 0, 0, 0, "test", 1, 1, False, False)
 
 
 class UnittestMech(unittest.TestCase):
@@ -26,7 +26,7 @@ class UnittestMech(unittest.TestCase):
         get_form = ms.get_mech(7)
         print(get_form)
         print(test_mech.m_id)
-        self.assertNotEqual(get_form.m_id, test_mech.m_id, msg="equal")
+        self.assertNotEqual(get_form.m_id, test_mech.m_id, msg="Not equal")
 
     # Currently doesn't work. The error is AssertionError: First sequence is not a list: <MagicMock id='2652697510384'>
     # def test_delete_mech(self):
