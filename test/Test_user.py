@@ -16,7 +16,7 @@ class UnittestUser(unittest.TestCase):
         test = us.create_user(test_user)
         self.assertEqual(test.is_pilot, True, msg="Noice")
 
-    def test_b_get_mech(self):
+    def test_b_get_user(self):
         get_form = us.get_user(4)
         print(get_form)
         print(test_user.u_id)
