@@ -32,6 +32,16 @@ class Mechrepo(MechCurd):
         else:
             raise ResourceNotFound("Could not find mech")
 
+    def get_mechs_con(self):
+        sql = 'SELECT * FROM mech WHERE confidential=false'
+        cursor = connection.cursor()
+        cursor.execute(sql)
+        records = cursor.fetchall()
+
+        account_list = [build_mech(record) for record in records]
+
+        return account_list
+
     def get_mechs(self, **sp):
         # IMPORTANT: the key in the dictionary passed to this method needs to not be user-generated
 

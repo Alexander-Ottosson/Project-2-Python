@@ -90,3 +90,7 @@ def route(app):
     def delete_mech(m_id):
         ms.delete_mech(m_id)
         return '', 204  # No Content
+
+    @app.route("/1/mech", methods=['GET'])
+    def get_mechs_con():
+        return jsonify([mech.json() for mech in ms.get_mechs_con()])

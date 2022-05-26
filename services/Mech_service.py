@@ -21,6 +21,9 @@ class MechServices:
     def get_mechs(self,  **search_params):
         return self.mech_repo.get_mechs(**search_params)
 
+    def get_mechs_con(self):
+        return self.get_mechs_con()
+
 
 def __test():
     mr = Mechrepo()
