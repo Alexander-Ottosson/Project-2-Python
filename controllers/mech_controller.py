@@ -98,10 +98,9 @@ def route(app):
 
     @app.route("/mech/checkout/<m_id>", methods=["PATCH"])
     def checkout_mech(m_id):
-        # TODO: get user info from a log in feature
         try:
             m_id = int(m_id)
-            user = User(u_id=1, username="shinji13", password="password", is_pilot=True, is_admin=False)
+            # user = User(u_id=1, username="shinji13", password="password", is_pilot=True, is_admin=False)
             if not hc.user and not hc.user.is_pilot:
                 raise InvalidCredentials('You do not have clearance to pilot a mech')
 
@@ -110,10 +109,10 @@ def route(app):
             if not mech.ava:
                 raise MechUnavailable('Mech is not available to pilot')
 
-            mech.cp = user.u_id
+            mech.cp = hc.user.u_id
             mech.ava = False
 
-            ms.update_mech(mech)
+            return ms.update_mech(mech).json(), 200
 
         except ValueError as e:
             return 'Please input a proper mech id', 400
