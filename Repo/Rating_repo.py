@@ -63,9 +63,7 @@ class Ratingrepo(RatingCurd):
         cursor.execute(sql, [r_id])
 
         connection.commit()
-        record = cursor.fetchone()
 
-        return build_rating(record)
 
 
 def _test():

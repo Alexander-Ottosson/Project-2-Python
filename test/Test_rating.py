@@ -19,19 +19,19 @@ class UnittestUser(unittest.TestCase):
         test = rs.create_rating(test_rating)
         self.assertEqual(test.review, "This is a test", msg="Noice")
 
-    def test_get_user(self):
+    def test_get_ratig(self):
         get_form = rs.get_rating(3)
         print(get_form)
         print(test_rat.r_id)
         self.assertEqual(get_form.r_id, test_rat.r_id, msg="equal")
 
-    def test_fail_get_mech(self):
+    def test_fail_get_rating(self):
         get_form = rs.get_rating(1)
         print(get_form)
         print(test_rat.r_id)
         self.assertNotEqual(get_form.r_id, test_rat.r_id, msg="Not equal")
 
-    def test_delete_user(self):
+    def test_delete_rating(self):
         rs.get_ratings = MagicMock(return_value=[
             Rating(r_id=3, user_id=3,mech_id=3, stars=5, review="This is a test"),
             Rating(r_id=6, user_id=3,mech_id=3, stars=5, review="This is a test"),
