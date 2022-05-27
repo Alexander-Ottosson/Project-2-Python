@@ -1,6 +1,6 @@
 # Project-2-Python
 
-Below are the 3 Repository Links to the Vehicle Managament System
+Below are the 3 Repository Links to the Vehicle Management System
 
 Link for Front End
   https://github.com/Alexander-Ottosson/Project-2-Front-End
