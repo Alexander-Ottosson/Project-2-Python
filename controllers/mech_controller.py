@@ -1,6 +1,7 @@
 from flask import request, jsonify
 
 from Class.User import User
+from controllers import home_controller as hc
 from exceptions.invalid_credentials import InvalidCredentials
 from exceptions.mech_unavailable import MechUnavailable
 from exceptions.resource_not_found import ResourceNotFound
@@ -12,6 +13,12 @@ from services.Mech_service import MechServices
 
 mr = Mechrepo()
 ms = MechServices(mr)
+
+
+def _is_logged_in():
+    if hc.user.u_id == 0:
+        return False
+    return True
 
 
 def route(app):
@@ -60,13 +67,41 @@ def route(app):
 
         return mech.json()
 
+    @app.route("/mech/checkin/<m_id>", methods=["PATCH"])
+    def checkin_mech(m_id):
+        try:
+            if not _is_logged_in():
+                raise InvalidCredentials('You must be logged in to checkin a mech')
+
+            m_id = int(m_id)
+            mech = ms.get_mech(m_id)
+
+            if not mech:
+                raise ResourceNotFound('Mech Not Found')
+
+            if mech.cp != hc.user.u_id:
+                raise InvalidCredentials('You cannot check in a mech you are not piloting')
+
+            # At this point it is confirmed user can check in the mech, and it exists
+
+            mech.cp = None
+            mech.ava = True
+
+            return ms.update_mech(mech).json()
+
+        except ValueError as e:
+            return 'Please input a proper mech id', 400
+        except ResourceNotFound as e:
+            return e.message, 404
+        except InvalidCredentials as e:
+            return e.message, 403
+
     @app.route("/mech/checkout/<m_id>", methods=["PATCH"])
     def checkout_mech(m_id):
-        # TODO: get user info from a log in feature
         try:
             m_id = int(m_id)
-            user = User(u_id=1, username="shinji13", password="password", is_pilot=True, is_admin=False)
-            if not user and not user.is_pilot:
+            # user = User(u_id=1, username="shinji13", password="password", is_pilot=True, is_admin=False)
+            if not hc.user and not hc.user.is_pilot:
                 raise InvalidCredentials('You do not have clearance to pilot a mech')
 
             mech = ms.get_mech(m_id=m_id)
@@ -74,10 +109,10 @@ def route(app):
             if not mech.ava:
                 raise MechUnavailable('Mech is not available to pilot')
 
-            mech.cp = user.u_id
+            mech.cp = hc.user.u_id
             mech.ava = False
 
-            ms.update_mech(mech)
+            return ms.update_mech(mech).json(), 200
 
         except ValueError as e:
             return 'Please input a proper mech id', 400

@@ -78,10 +78,16 @@ class Mechrepo(MechCurd):
         return account_list
 
     def update_mech(self, change):
-        sql = 'UPDATE mech SET color=%s, description=%s, current_pilot=%s, available=%s, confidential=%s where id=%s ' \
+        sql = 'UPDATE mech SET ' \
+              'color=%(color)s, ' \
+              'description=%(description)s, ' \
+              'current_pilot=%(currentPilot)s, ' \
+              'available=%(available)s, ' \
+              'confidential=%(confidential)s ' \
+              'where id=%(id)s ' \
               'RETURNING * '
         cursor = connection.cursor()
-        cursor.execute(sql, [change.color, change.des, change.cp, change.ava, change.m_id, change.con])
+        cursor.execute(sql, change.json())
         connection.commit()
         record = cursor.fetchone()
 
