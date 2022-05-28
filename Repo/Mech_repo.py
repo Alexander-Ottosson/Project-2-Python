@@ -1,5 +1,6 @@
 from Class.Mech import Mech
 from Curd.Mech_curd import MechCurd
+from controllers import home_controller as hc
 from exceptions.resource_not_found import ResourceNotFound
 from util.db_connection import connection
 
@@ -47,9 +48,15 @@ class Mechrepo(MechCurd):
 
         sql = 'SELECT * FROM mech '
 
+        # Begin WHERE clause
+        sql += 'WHERE '
+
+        if hc.user.u_id == 0:
+            sql += 'confidential = false AND '
+        else:
+            sql += '1 = 1 AND '
+
         if len(sp) != 0:
-            # Begin WHERE clause
-            sql += 'WHERE '
 
             # Search term finds the term in the mech's model, make, and description, clause needs to be combined with OR
             if 'search_term' in sp and sp['search_term']:
@@ -66,8 +73,8 @@ class Mechrepo(MechCurd):
                     else:
                         sql += f"{k} = %({k})s AND "
 
-            # Removes the last AND from the Where clause to prevent a syntax error
-            sql = sql[:len(sql) - 4]
+        # Removes the last AND from the Where clause to prevent a syntax error
+        sql = sql[:len(sql) - 4]
 
         cursor = connection.cursor()
         cursor.execute(sql, sp)
