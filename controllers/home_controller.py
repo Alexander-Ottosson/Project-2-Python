@@ -9,7 +9,7 @@ from services.User_service import UserServices
 ur = UserRepo()
 us = UserServices(ur)
 
-user = us.get_user(1)
+user = User()
 
 
 def route(app):
@@ -26,6 +26,12 @@ def route(app):
                    }, 200
         except ResourceNotFound as e:
             return 'Invalid Login', 401
+
+    @app.route("/logout", methods=['POST'])
+    def logout():
+        global user
+        user = User()
+        return {'message': "Successfully Logged Out"}, 200
 
     @app.route('/current_user', methods=['GET'])
     def current_user():
