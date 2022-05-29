@@ -8,7 +8,6 @@ from exceptions.resource_not_found import ResourceNotFound
 from Class.Mech import Mech
 from Repo.Mech_repo import Mechrepo
 
-# TODO:  create MechService class
 from services.Mech_service import MechServices
 
 mr = Mechrepo()
@@ -39,7 +38,12 @@ def route(app):
     @app.route("/mech/<m_id>", methods=['GET'])
     def get_mech(m_id):
         try:
-            return ms.get_mech(int(m_id)).json(), 200
+            mech = ms.get_mech(int(m_id))
+
+            if mech.con and hc.user.u_id == 0:
+                # Raises resource not found because anonymous users shouldn't know confidential mechs exist
+                raise ResourceNotFound('Mech does not exist')
+            return mech.json(), 200
         except ValueError as e:
             return "Not a valid ID", 400  # Bad Request
         except ResourceNotFound as r:
@@ -47,25 +51,47 @@ def route(app):
 
     @app.route("/mech", methods=["POST"])
     def post_mech():
-        body = request.json
+        try:
+            if not hc.user.is_admin:
+                raise InvalidCredentials('Only admins can create mechs')
 
-        mech = Mech(make=body["make"], model=body["model"], year=body["year"], color=body["color"],
-                    max_speed=body["maxSpeed"], weight=body["weight"], height=body["height"],
-                    des=body["description"], cp=body["currentPilot"], pc=body["pilotCount"], ava=body["available"],
-                    con=body["confidential"])
-        mech = ms.create_mech(mech)
+            body = request.json
 
-        return mech.json()
+            mech = Mech(make=body["make"], model=body["model"], year=body["year"], color=body["color"],
+                        max_speed=body["maxSpeed"], weight=body["weight"], height=body["height"],
+                        des=body["description"], cp=body["currentPilot"], pc=body["pilotCount"], ava=body["available"],
+                        con=body["confidential"])
+            mech = ms.create_mech(mech)
+
+            return mech.json()
+        except ValueError as e:
+            return 'Please make sure all values are correctly formatted', 400
+        except InvalidCredentials as e:
+            return e.message, 403
 
     @app.route("/mech/<m_id>", methods=["PUT"])
     def put_mech(m_id):
-        body = request.json
-        mech = Mech(m_id=m_id, make=body["make"], model=body["model"], year=body["year"], color=body["color"],
-                    max_speed=body["maxSpeed"], weight=body["weight"], height=body["height"], des=body["description"],
-                    cp=body["currentPilot"], pc=body["pilotCount"], ava=body["available"], con=body["confidential"])
-        mech = ms.update_mech(mech)
+        try:
+            m_id = int(m_id)
 
-        return mech.json()
+            if not hc.user.is_admin:
+                raise InvalidCredentials('Only admins can edit mechs')
+
+            body = request.json
+            mech = Mech(m_id=m_id, make=body["make"], model=body["model"], year=body["year"], color=body["color"],
+                        max_speed=body["maxSpeed"], weight=body["weight"], height=body["height"],
+                        des=body["description"],
+                        cp=body["currentPilot"], pc=body["pilotCount"], ava=body["available"], con=body["confidential"])
+            mech = ms.update_mech(mech)
+
+            return mech.json()
+
+        except ValueError as e:
+            return 'Please enter a valid mech id', 400
+        except ResourceNotFound as e:
+            return e.message, 404
+        except InvalidCredentials as e:
+            return e.message, 403
 
     @app.route("/mech/checkin/<m_id>", methods=["PATCH"])
     def checkin_mech(m_id):
@@ -123,8 +149,18 @@ def route(app):
 
     @app.route("/mech/<m_id>", methods=['DELETE'])
     def delete_mech(m_id):
-        ms.delete_mech(m_id)
-        return '', 204  # No Content
+        try:
+            m_id = int(m_id)
+            if not hc.user.is_admin:
+                raise InvalidCredentials('Only admins can delete mech')
+            ms.delete_mech(m_id)
+            return '', 204  # No Content
+        except ValueError as e:
+            return 'Invalid Mech Id', 400
+        except ResourceNotFound as e:
+            return e.message, 404
+        except InvalidCredentials as e:
+            return e.message, 403
 
     @app.route("/1/mech", methods=['GET'])
     def get_mechs_con():
