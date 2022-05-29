@@ -16,7 +16,7 @@ Link for Python
 Link for Java
   https://github.com/Alexander-Ottosson/Project-2-Java
   
-<!-- To run the app Install
+<!-- To run the App Install
   1. `pip install psycopg2`
   2. `pip install flask`
   3. `pip install flask_cors`
