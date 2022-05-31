@@ -1,6 +1,5 @@
 from flask import request
 
-from controllers import mech_controller
 from exceptions.resource_not_found import ResourceNotFound
 from Class.User import User
 from Repo.User_repo import UserRepo
