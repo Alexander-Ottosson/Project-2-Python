@@ -7,14 +7,14 @@ REST, SQL, JavaScript, Java, Python, Flask, Javalin, Selenium
 
 Below are the 3 Repository Links to the Vehicle Management System
 
-Link for Front End
+Link for Front End:<br>
   https://github.com/Alexander-Ottosson/Project-2-Front-End
  
-Link for Python
-https://github.com/Alexander-Ottosson/Project-2-Python/tree/dev <!-- Current working branch -->
+Link for Python:<br>
+https://github.com/Alexander-Ottosson/Project-2-Python/tree/dev < Current working directory
 <!-- Commented out  https://github.com/Alexander-Ottosson/Project-2-Python -->
   
-Link for Java
+Link for Java:<br>
   https://github.com/Alexander-Ottosson/Project-2-Java
   
 <!-- To run the App Install
