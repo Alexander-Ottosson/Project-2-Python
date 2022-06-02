@@ -5,7 +5,7 @@
 ## Description:
 The Mechanized Vehicle Management System allows for users to manage an inventory of mechs. Admins can add mechs to the database, update a mechs info, or delete them. Pilots can view detailed information about a mech and check them out of the inventory for missions. If a user isn't logged in they are still able to view some mechs info, but Admins are able to set a mech as confidential, which prevents anonymous users from viewing it. Users can also leave reviews on mechs.
 
-##Technologies Used:
+## Technologies Used:
 <!-- REST -->
 PostgreSQL 14
 HTML 5
@@ -27,13 +27,13 @@ Pilots can check out a mech for piloting, and check it back in when done
 
 ## Setup
 Clone commands:
-- git clone https://github.com/Alexander-Ottosson/Project-2-Front-End.git (project is currently on dev branch)
-- git clone https://github.com/Alexander-Ottosson/Project-2-Java.git
-- git clone https://github.com/Alexander-Ottosson/Project-2-Python.git (project is currently on dev branch)
+- `git clone https://github.com/Alexander-Ottosson/Project-2-Front-End.git` (project is currently on dev branch)
+- `git clone https://github.com/Alexander-Ottosson/Project-2-Java.git`
+- `git clone https://github.com/Alexander-Ottosson/Project-2-Python.git` (project is currently on dev branch)
 
 database uses aws
 
-* create 3 system environment variables
+* create 4 system environment variables
 - database_host
 - database_username
 - database_password
